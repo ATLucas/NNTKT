@@ -1,0 +1,30 @@
+{
+  "size": 4,
+  "wordDim": 1,
+  "words": [
+    {
+      "word": "false",
+      "updatable": false,
+      "vector": [0],
+      "matrix": [1]
+    },
+    {
+      "word": "true",
+      "updatable": false,
+      "vector": [1],
+      "matrix": [1]
+    },
+    {
+      "word": "and",
+      "updatable": true,
+      "vector": [],
+      "matrix": []
+    },
+    {
+      "word": "not",
+      "updatable": true,
+      "vector": [],
+      "matrix": []
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "numTrees": 6,
+  "labelType": "String",
+  "trees": [
+    {
+      "label": "false",
+      "left": {
+        "symbol": "false"
+      },
+      "right": {
+        "left": {
+          "symbol": "and"
+        },
+        "right": {
+          "symbol": "false"
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "symbol": "true"
+      },
+      "right": {
+        "left": {
+          "symbol": "and"
+        },
+        "right": {
+          "symbol": "false"
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "symbol": "false"
+      },
+      "right": {
+        "left": {
+          "symbol": "and"
+        },
+        "right": {
+          "symbol": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "symbol": "true"
+      },
+      "right": {
+        "left": {
+          "symbol": "and"
+        },
+        "right": {
+          "symbol": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "symbol": "not"
+      },
+      "right": {
+        "symbol": "false"
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "symbol": "not"
+      },
+      "right": {
+        "symbol": "true"
+      }
+    }
+  ]
+}

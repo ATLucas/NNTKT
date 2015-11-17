@@ -1,0 +1,89 @@
+****************************************
+{
+  "params": {
+    "numEpochs": 8,
+    "itersPerEpoch": 1,
+    "minibatchSize": 8,
+    "learningRate": 1.0,
+    "lambda": 0.0,
+    "objectiveFunction": "CROSS-ENTROPY",
+    "itersBetweenWritingModel": 4
+  },
+
+  "topology": [
+    {
+      "type": "Affine",
+      "inputDim": 784,
+      "outputDim": 30
+    },
+    {
+      "type": "Relu",
+      "dim": 30
+    },
+    {
+      "type": "Affine",
+      "inputDim": 30,
+      "outputDim": 30
+    },
+    {
+      "type": "Relu",
+      "dim": 30
+    },
+    {
+      "type": "Affine",
+      "inputDim": 30,
+      "outputDim": 30
+    },
+    {
+      "type": "Relu",
+      "dim": 30
+    },
+    {
+      "type": "Affine",
+      "inputDim": 30,
+      "outputDim": 10
+    },
+    {
+      "type": "Softmax",
+      "dim": 10
+    }
+  ]
+}
+****************************************
+
+
+Epoch 1 of 8
+
+Iteration 1 of 8 at 18:56:32
+Average cost per example: 1.4034281
+
+Validating at 18:56:56...
+ validation set...
+Accuracy: 66.42
+
+Epoch 2 of 8
+
+Iteration 2 of 8 at 18:56:58
+Average cost per example: 0.8804983
+
+Validating at 18:57:21...
+ validation set...
+Accuracy: 76.16
+
+Epoch 3 of 8
+
+Iteration 3 of 8 at 18:57:23
+Average cost per example: 0.70867234
+
+Validating at 18:57:46...
+ validation set...
+Accuracy: 79.39
+
+Epoch 4 of 8
+
+Iteration 4 of 8 at 18:57:48
+Average cost per example: 0.690608
+
+Validating at 18:58:11...
+ validation set...
+Accuracy: 79.15
