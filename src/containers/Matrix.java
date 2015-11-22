@@ -1,7 +1,6 @@
 package containers;
 
 import tools.Logger;
-import tools.TrainConfig;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -197,7 +196,7 @@ public class Matrix {
 		return this;
 	}
 
-	public float applyCrossEntropyError(TrainConfig config, Matrix targets) {
+	public float applyCrossEntropyError(Matrix targets, int minibatchSize) {
 		if(!isMutable) Logger.die("Tried to change an immutable matrix of dimensions"+numRows+"x"+numCols);
 		if(this.numRows != targets.numRows || this.numCols != targets.numCols) {
 			Logger.die("Cannot calculate cross entropy error between a "+this.numRows+"x"+this.numCols+
@@ -206,14 +205,14 @@ public class Matrix {
 		float cost = 0;
 		for(int x=0; x<numRows; x++) {
 			for (int y=0; y<numCols; y++) {
-				cost -= targets.values[x*stride + y] * Math.log(this.values[x*stride + y]) / config.minibatchSize;
-				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / config.minibatchSize;
+				cost -= targets.values[x*stride + y] * Math.log(this.values[x*stride + y]) / minibatchSize;
+				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / minibatchSize;
 			}
 		}
 		return cost;
 	}
 
-	public float applyMeanSquaredError(TrainConfig config, Matrix targets) {
+	public float applyMeanSquaredError(Matrix targets, int minibatchSize) {
 		if(!isMutable) Logger.die("Tried to change an immutable matrix of dimensions"+numRows+"x"+numCols);
 		if(this.numRows != targets.numRows || this.numCols != targets.numCols) {
 			Logger.die("Cannot calculate mean squared error between a "+this.numRows+"x"+this.numCols+
@@ -222,8 +221,8 @@ public class Matrix {
 		float cost = 0;
 		for(int x=0; x<numRows; x++) {
 			for (int y=0; y<numCols; y++) {
-				cost += (float)Math.pow(this.values[x*stride + y] - targets.values[x*stride + y], 2) / config.minibatchSize;
-				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / config.minibatchSize;
+				cost += (float)Math.pow(this.values[x*stride + y] - targets.values[x*stride + y], 2) / minibatchSize;
+				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / minibatchSize;
 			}
 		}
 		return cost;

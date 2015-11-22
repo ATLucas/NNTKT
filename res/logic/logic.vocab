@@ -1,8 +1,6 @@
 {
   "size": 5,
   "wordDim": 1,
-  "vectorLearningRate": 0.0001,
-  "matrixLearningRate": 0.0001,
   "words": [
     {
       "word": "false",

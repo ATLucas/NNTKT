@@ -8,16 +8,13 @@ import containers.MvPair;
  */
 public class Word {
 	private int id, dim;
-	private float vectorLearningRate, matrixLearningRate;
 	private boolean updatable;
 	public MvPair mvPair;
 
-	public Word(int dim, int id, float[] vec, float[] mat, boolean updatable, float vLR, float mLR){
+	public Word(int dim, int id, float[] vec, float[] mat, boolean updatable){
 		this.dim = dim;
 		this.id = id;
 		this.updatable = updatable;
-		vectorLearningRate = vLR;
-		matrixLearningRate = mLR;
 		Matrix vector = new Matrix(1, dim);
 		Matrix matrix = new Matrix(dim, dim);
 		vector.copyRow(vec);
@@ -33,7 +30,7 @@ public class Word {
 		return dim;
 	}
 
-	public void update(Matrix v, Matrix m) {
+	public void update(Matrix v, Matrix m, float vectorLearningRate, float matrixLearningRate) {
 		if(updatable) {
 			mvPair.vector.update(v, vectorLearningRate);
 			mvPair.matrix.update(m, matrixLearningRate);

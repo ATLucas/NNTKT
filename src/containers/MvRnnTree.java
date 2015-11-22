@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tools.Logger;
-import tools.TrainConfig;
+import tools.MvRnnTrainConfig;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -59,7 +59,7 @@ public class MvRnnTree {
 		return node;
 	}
 
-	public float train(TrainConfig config, NeuralNetwork network, Matrix weights) {
+	public float train(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights) {
 		return root.backprop(config, network, weights, root.forward(network, weights));
 	}
 
@@ -107,27 +107,36 @@ public class MvRnnTree {
 			}
 		}
 
-		float backprop(TrainConfig config, NeuralNetwork network, Matrix weights, MvPair data) {
+		float backprop(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights, MvPair data) {
 			float cost = 0;
 
+			/** If we have a label, calculate the error,
+			 * else we assume the input to this node is the backpropped error. **/
 			if(targetWord != null) {
-				cost = network.calcObjectiveFunction(config, data.vector, targetWord.mvPair.vector);
-				data.matrix.applyMeanSquaredError(config, targetWord.mvPair.matrix);
+				cost = network.calcObjectiveFunction(config.networkConfig, data.vector, targetWord.mvPair.vector);
+				data.matrix.applyMeanSquaredError(targetWord.mvPair.matrix, 1);
 			} else if(targetVector != null) {
 				Logger.die("Target vectors not yet supported for tree");
 			}
 
-			if(word != null) {
-				word.update(data.vector, data.matrix);
+			if(word != null) { // if this node is a leaf
+				word.update(data.vector, data.matrix, config.vectorLearningRate, config.matrixLearningRate);
 			} else {
+				/** Backprop the the vector composition network error **/
 				data.vector = network.backward(data.vector);
-				network.update(config);
+
+				/** Update the vector composition network **/
+				network.update(config.networkConfig);
+
+				/** Backprop the matrix composition weights error **/
 				if(inputs.size() == 0) Logger.die("Tried to backprop on a node that has not received input");
 				Matrix temp = data.matrix.multiplyTranspose(weights);
-				//todo weights should use its own learning rate and decay factor
-				weights.updateWeights(inputs.pop().transposeMultiply(data.matrix), config.learningRate, config.decayFactor);
+
+				/** Update the matrix composition weights **/
+				weights.updateWeights(inputs.pop().transposeMultiply(data.matrix), config.weightsLearningRate, config.weightsDecayFactor);
 				data.matrix = temp;
 
+				/** Now continue the backprop **/
 				if (left != null) {
 					if (right != null) {
 						Matrix leftError = data.vector.getLeftHalf().multiplyTranspose(right.mvPair.matrix);

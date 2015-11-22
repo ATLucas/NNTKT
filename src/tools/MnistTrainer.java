@@ -4,6 +4,7 @@ import containers.Matrix;
 import containers.Example;
 import containers.Dataset;
 import network.NeuralNetwork;
+import org.json.JSONObject;
 import readers.MnistReader;
 
 /**
@@ -20,7 +21,10 @@ public class MnistTrainer {
 		Dataset testData = new Dataset();
 		MnistReader.Read(testData, "res/mnist/t10k-images.idx3-ubyte", "res/mnist/t10k-labels.idx1-ubyte");
 
-		TrainConfig trainConfig= new TrainConfig(args[0], 60000);
+		TrainConfig trainConfig = null;
+		try {
+			trainConfig = new TrainConfig(new JSONObject(Common.readFileIntoString(args[0])), 60000);
+		} catch(Exception e) {e.printStackTrace();Logger.die("Unable to parse config file: "+args[0]);}
 		Logger.log(""+trainConfig);
 
 		NeuralNetwork network = new NeuralNetwork(trainConfig.getTopology());

@@ -10,6 +10,7 @@ import java.nio.file.Paths;
  * Created by Andrew on 11/11/2015.
  */
 public class Common {
+	public static final int CROSS_ENTROPY=1, MEAN_SQUARED=2;
 
 	public static String readFileIntoString(String path)
 			throws IOException

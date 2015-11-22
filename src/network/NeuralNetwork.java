@@ -1,9 +1,9 @@
 package network;
 
-import containers.Dataset;
 import containers.Matrix;
 import containers.Minibatch;
 import org.json.JSONObject;
+import tools.Common;
 import tools.Logger;
 import tools.TrainConfig;
 
@@ -90,20 +90,20 @@ public class NeuralNetwork {
 
 	public float calcObjectiveFunction(TrainConfig config, Matrix data, Minibatch minibatch) {
 		switch (config.objectiveFunction) {
-			case TrainConfig.CROSS_ENTROPY:
-				return data.applyCrossEntropyError(config, minibatch.getTargets());
-			case TrainConfig.MEAN_SQUARED:
-				return data.applyMeanSquaredError(config, minibatch.getTargets());
+			case Common.CROSS_ENTROPY:
+				return data.applyCrossEntropyError(minibatch.getTargets(), minibatch.size());
+			case Common.MEAN_SQUARED:
+				return data.applyMeanSquaredError(minibatch.getTargets(), minibatch.size());
 		}
 		return -1;
 	}
 
 	public float calcObjectiveFunction(TrainConfig config, Matrix data, Matrix targets) {
 		switch (config.objectiveFunction) {
-			case TrainConfig.CROSS_ENTROPY:
-				return data.applyCrossEntropyError(config, targets);
-			case TrainConfig.MEAN_SQUARED:
-				return data.applyMeanSquaredError(config, targets);
+			case Common.CROSS_ENTROPY:
+				return data.applyCrossEntropyError(targets, config.minibatchSize);
+			case Common.MEAN_SQUARED:
+				return data.applyMeanSquaredError(targets, config.minibatchSize);
 		}
 		return -1;
 	}
