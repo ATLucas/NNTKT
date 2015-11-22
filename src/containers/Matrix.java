@@ -33,7 +33,6 @@ public class Matrix {
 		isMutable = true;
 		System.arraycopy(other.values, 0, this.values, 0, numRows*numCols);
 	}
-
 	public void makeImmutable() {
 		isMutable = false;
 	}
@@ -70,7 +69,9 @@ public class Matrix {
 		Random rand = new Random();
 		for(int x=0; x<numRows; x++) {
 			for (int y = 0; y < numCols; y++) {
-				values[x*stride + y] = (float)(rand.nextGaussian() / Math.sqrt(numCols));
+				float val = (float)(rand.nextGaussian() / Math.sqrt(numCols));
+				//val = val > 0 ? val: 0;
+				values[x*stride + y] = val;
 			}
 		}
 	}
@@ -126,6 +127,63 @@ public class Matrix {
 		return result;
 	}
 
+	public static Matrix StackHorizontally(Matrix first, Matrix second) {
+		if(first.numRows != second.numRows) Logger.die("Tried to horizontally stack matrices with different number of rows");
+		Matrix stackedMatrix = new Matrix(first.numRows, first.numCols+second.numCols);
+		int stride = stackedMatrix.numCols;
+		for(int i=0; i<stackedMatrix.numRows; i++) {
+			System.arraycopy(first.values, i*first.stride, stackedMatrix.values, i*stride, first.numCols);
+			System.arraycopy(second.values, i*second.stride, stackedMatrix.values, i*stride+first.numCols, second.numCols);
+		}
+		stackedMatrix.pointer = stackedMatrix.values.length;
+		return stackedMatrix;
+	}
+
+	public static Matrix StackVertically(Matrix first, Matrix second) {
+		if(first.numCols != second.numCols) Logger.die("Tried to vertically stack matrices with different number of columns");
+		Matrix stackedMatrix = new Matrix(first.numRows+second.numRows, first.numCols);
+		System.arraycopy(first.values, 0, stackedMatrix.values, 0, first.values.length);
+		System.arraycopy(second.values, 0, stackedMatrix.values, first.values.length, second.values.length);
+		stackedMatrix.pointer = stackedMatrix.values.length;
+		return stackedMatrix;
+	}
+
+	public Matrix getTopHalf() {
+		if (numRows % 2 == 1) Logger.die("Tried to get half of a matrix with an odd number of rows");
+		Matrix half = new Matrix(numRows/2, numCols);
+		System.arraycopy(values, 0, half.values, 0, (numRows/2)*numCols);
+		half.pointer = half.values.length;
+		return half;
+	}
+
+	public Matrix getBottomHalf() {
+		if (numRows % 2 == 1) Logger.die("Tried to get half of a matrix with an odd number of rows");
+		Matrix half = new Matrix(numRows/2, numCols);
+		System.arraycopy(values, half.values.length, half.values, 0, (numRows/2)*numCols);
+		half.pointer = half.values.length;
+		return half;
+	}
+
+	public Matrix getLeftHalf() {
+		if (numCols % 2 == 1) Logger.die("Tried to get left half of a matrix with an odd number of columns");
+		Matrix half = new Matrix(numRows, numCols/2);
+		for(int i=0; i<numRows; i++) {
+			System.arraycopy(values, i*stride, half.values, i*half.stride, numCols/2);
+		}
+		half.pointer = half.values.length;
+		return half;
+	}
+
+	public Matrix getRightHalf() {
+		if (numCols % 2 == 1) Logger.die("Tried to get right half of a matrix with an odd number of columns");
+		Matrix half = new Matrix(numRows, numCols/2);
+		for(int i=0; i<numRows; i++) {
+			System.arraycopy(values, i*stride+numCols/2, half.values, i*half.stride, numCols/2);
+		}
+		half.pointer = half.values.length;
+		return half;
+	}
+
 	public Matrix applyBias(Matrix biases) {
 		if(!isMutable) Logger.die("Tried to change an immutable matrix of dimensions"+numRows+"x"+numCols);
 		if(biases.numCols != this.numCols) {
@@ -148,11 +206,11 @@ public class Matrix {
 		float cost = 0;
 		for(int x=0; x<numRows; x++) {
 			for (int y=0; y<numCols; y++) {
-				cost -= targets.values[x*stride + y] * Math.log(this.values[x*stride + y]);
-				this.values[x*stride + y] = targets.values[x*stride + y] - this.values[x*stride + y];
+				cost -= targets.values[x*stride + y] * Math.log(this.values[x*stride + y]) / config.minibatchSize;
+				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / config.minibatchSize;
 			}
 		}
-		return cost / config.minibatchSize;
+		return cost;
 	}
 
 	public float applyMeanSquaredError(TrainConfig config, Matrix targets) {
@@ -164,11 +222,11 @@ public class Matrix {
 		float cost = 0;
 		for(int x=0; x<numRows; x++) {
 			for (int y=0; y<numCols; y++) {
-				cost += (float)Math.pow(this.values[x*stride + y] - targets.values[x*stride + y], 2);
-				this.values[x*stride + y] = targets.values[x*stride + y] - this.values[x*stride + y];
+				cost += (float)Math.pow(this.values[x*stride + y] - targets.values[x*stride + y], 2) / config.minibatchSize;
+				this.values[x*stride + y] = (targets.values[x*stride + y] - this.values[x*stride + y]) / config.minibatchSize;
 			}
 		}
-		return cost / config.minibatchSize;
+		return cost;
 	}
 
 	public Matrix applySigmoid() {
@@ -289,7 +347,7 @@ public class Matrix {
 		}
 		for(int x=0; x<delta.numRows; x++) {
 			for (int y = 0; y < delta.numCols; y++) {
-				this.values[y] -= delta.values[x * delta.stride + y] * learningFactor;
+				this.values[y] += delta.values[x * delta.stride + y] * learningFactor;
 			}
 		}
 	}
@@ -301,6 +359,18 @@ public class Matrix {
 				this.values[x*stride + y] = this.values[x*stride + y] * decayFactor +
 					delta.values[x*stride + y] * learningFactor;
 			}
+		}
+	}
+
+	public void update(Matrix delta, float learningFactor) {
+		if(!isMutable) Logger.die("Tried to change an immutable matrix of dimensions"+numRows+"x"+numCols);
+		if(values.length != delta.values.length) {
+			Logger.die("Cannot update a "+this.numRows+"x"+this.numCols+
+					" matrix by a "+delta.numRows+"x"+delta.numCols+" matrix");
+		}
+
+		for(int x=0; x<values.length; x++) {
+			this.values[x] += delta.values[x] * learningFactor;
 		}
 	}
 
@@ -319,6 +389,10 @@ public class Matrix {
 		return indexOfMax;
 	}
 
+	public String toString() {
+		return Arrays.toString(values);
+	}
+
 	public void toString(StringBuilder builder){
 		for(int x=0; x<numRows; x++) {
 			builder.append("\t\t");
@@ -332,22 +406,22 @@ public class Matrix {
 	}
 
 	private float sigmoid(float f) {
-		return (float)( 1 / (1 + Math.exp(-f)) );
+		return (float)( 1f / (1f + Math.exp(-f)) );
 	}
 
 	private float sigmoidPrime(float f) {
 		double exp = Math.exp(-f);
-		return (float)( (1 - 1 / (1 + exp)) * (1 / (1 + exp)) );
+		return (float)( (1f - 1f / (1f + exp)) * (1f / (1f + exp)) );
 	}
 
 	private float tanh(float f) {
 		double exp = Math.exp(f);
-		return (float)( ( exp - 1/exp ) / (exp + 1/exp) );
+		return (float)( ( exp - 1f/exp ) / (exp + 1f/exp) );
 	}
 
 	private float tanhPrime(float f) {
 		double exp = Math.exp(2*f);
-		return (float)( 4 / (exp + 1/exp + 2) );
+		return (float)( 4f / (exp + 1f/exp + 2f) );
 	}
 
 	private float relu(float f) {

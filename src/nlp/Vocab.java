@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class Vocab {
 	private int wordDim;
+	private float vectorLearningRate, matrixLearningRate;
 
 	private HashMap<String,Integer> string2id;
 	private HashMap<Integer,String> id2string;
@@ -25,6 +26,8 @@ public class Vocab {
 
 		int size = jobj.getInt("size");
 		wordDim = jobj.getInt("wordDim");
+		vectorLearningRate = (float)jobj.getDouble("vectorLearningRate");
+		matrixLearningRate = (float)jobj.getDouble("matrixLearningRate");
 		JSONArray words = jobj.getJSONArray("words");
 		if(size != words.length()) Logger.die("numWords in vocab file is incorrect");
 		Random rand = new Random();
@@ -62,7 +65,10 @@ public class Vocab {
 
 			string2id.put(wordString, i);
 			id2string.put(i, wordString);
-			id2word.put(i, new Word(wordDim, i, vec, mat, wordObj.getBoolean("updatable")));
+			id2word.put(i, new Word(wordDim, i, vec, mat,
+										wordObj.getBoolean("updatable"),
+										vectorLearningRate,
+										matrixLearningRate));
 		}
 	}
 

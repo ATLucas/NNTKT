@@ -1,79 +1,497 @@
 {
-  "numTrees": 6,
+  "numTrees": 28,
   "labelType": "String",
   "trees": [
     {
       "label": "false",
       "left": {
-        "symbol": "false"
+        "word": "false"
       },
       "right": {
         "left": {
-          "symbol": "and"
+          "word": "and"
         },
         "right": {
-          "symbol": "false"
+          "word": "false"
         }
       }
     },
     {
       "label": "false",
       "left": {
-        "symbol": "true"
+        "word": "true"
       },
       "right": {
         "left": {
-          "symbol": "and"
+          "word": "and"
         },
         "right": {
-          "symbol": "false"
+          "word": "false"
         }
       }
     },
     {
       "label": "false",
       "left": {
-        "symbol": "false"
+        "word": "false"
       },
       "right": {
         "left": {
-          "symbol": "and"
+          "word": "and"
         },
         "right": {
-          "symbol": "true"
+          "word": "true"
         }
       }
     },
     {
       "label": "true",
       "left": {
-        "symbol": "true"
+        "word": "true"
       },
       "right": {
         "left": {
-          "symbol": "and"
+          "word": "and"
         },
         "right": {
-          "symbol": "true"
+          "word": "true"
         }
       }
     },
     {
       "label": "true",
       "left": {
-        "symbol": "not"
+        "word": "not"
       },
       "right": {
-        "symbol": "false"
+        "word": "false"
       }
     },
     {
       "label": "false",
       "left": {
-        "symbol": "not"
+        "word": "not"
       },
       "right": {
-        "symbol": "true"
+        "word": "true"
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "false"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "false"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "true"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "true"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "word": "false"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "word": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "and"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "false"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "word": "true"
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "not"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "true"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "true"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "true"
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "true"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "false"
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "not"
+        },
+        "right": {
+          "word": "false"
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "word": "false"
+        }
       }
     }
   ]

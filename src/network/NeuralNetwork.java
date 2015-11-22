@@ -33,17 +33,17 @@ public class NeuralNetwork {
 						));
 						break;
 					case "Tanh":
-						components.add(new SigmoidComponent(
+						components.add(new TanhComponent(
 								obj.getInt("dim")
 						));
 						break;
 					case "Relu":
-						components.add(new SigmoidComponent(
+						components.add(new ReluComponent(
 								obj.getInt("dim")
 						));
 						break;
 					case "Relu2":
-						components.add(new SigmoidComponent(
+						components.add(new Relu2Component(
 								obj.getInt("dim")
 						));
 						break;
@@ -76,7 +76,7 @@ public class NeuralNetwork {
 
 		float cost = calcObjectiveFunction(config, data, minibatch);
 
-		data = backward(data);
+		backward(data);
 
 		update(config);
 
@@ -94,6 +94,16 @@ public class NeuralNetwork {
 				return data.applyCrossEntropyError(config, minibatch.getTargets());
 			case TrainConfig.MEAN_SQUARED:
 				return data.applyMeanSquaredError(config, minibatch.getTargets());
+		}
+		return -1;
+	}
+
+	public float calcObjectiveFunction(TrainConfig config, Matrix data, Matrix targets) {
+		switch (config.objectiveFunction) {
+			case TrainConfig.CROSS_ENTROPY:
+				return data.applyCrossEntropyError(config, targets);
+			case TrainConfig.MEAN_SQUARED:
+				return data.applyMeanSquaredError(config, targets);
 		}
 		return -1;
 	}

@@ -4,14 +4,16 @@ import containers.Matrix;
 import tools.Logger;
 import tools.TrainConfig;
 
+import java.util.Stack;
+
 /**
  * Created by Andrew on 11/13/2015.
  */
 public class AffineComponent implements NetworkComponent {
 	private Matrix weights;
 	private Matrix biases;
-	private Matrix input;
-	private Matrix error;
+	private Stack<Matrix> inputs;
+	private Stack<Matrix> errors;
 
 	private int inputDim, outputDim;
 
@@ -21,10 +23,12 @@ public class AffineComponent implements NetworkComponent {
 
 		weights = new Matrix(r,c);
 		biases = new Matrix(1,c);
-		error = null;
 
 		weights.randomize();
 		biases.randomize();
+
+		inputs = new Stack<>();
+		errors = new Stack<>();
 	}
 
 	@Override
@@ -39,28 +43,28 @@ public class AffineComponent implements NetworkComponent {
 
 	@Override
 	public Matrix forward(Matrix input) {
-		this.input = input;
-		this.input.makeImmutable();
+		input.makeImmutable();
+		inputs.push(input);
 		return input.multiply(weights).applyBias(biases);
 	}
 
 	@Override
 	public Matrix backward(Matrix error) {
-		this.error = error;
-		this.error.makeImmutable();
+		error.makeImmutable();
+		errors.push(error);
 		return error.multiplyTranspose(weights);
 	}
 
 	@Override
 	public void update(TrainConfig config) {
-		if(input == null) Logger.die("Tried to update an AffineComponent that has not received input");
-		if(error == null) Logger.die("Tried to update an AffineComponent that has not received error");
+		if(inputs.size() == 0) Logger.die("Tried to update an AffineComponent that has not received input");
+		if(errors.size() == 0) Logger.die("Tried to update an AffineComponent that has not received error");
+		Matrix input = inputs.pop();
+		Matrix error = errors.pop();
 		biases.updateBias(error, config.learningRate / config.minibatchSize);
 		weights.updateWeights(input.transposeMultiply(error),
 				config.learningRate / config.minibatchSize,
 				config.decayFactor);
-		input = null;
-		error = null;
 	}
 
 	@Override
