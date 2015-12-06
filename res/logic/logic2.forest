@@ -1,0 +1,108 @@
+{
+  "numTrees": 3,
+  "labelType": "String",
+  "trees": [
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "true"
+        },
+        "right": {
+          "left": {
+            "word": "and"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "false"
+          },
+          "right": {
+            "left": {
+              "word": "and"
+            },
+            "right": {
+              "word": "true"
+            }
+          }
+        }
+      }
+    },
+    {
+      "label": "false",
+      "left": {
+        "left": {
+          "word": "false"
+        },
+        "right": {
+          "left": {
+            "word": "and"
+          },
+          "right": {
+            "word": "false"
+          }
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "false"
+          },
+          "right": {
+            "left": {
+              "word": "and"
+            },
+            "right": {
+              "word": "true"
+            }
+          }
+        }
+      }
+    },
+    {
+      "label": "true",
+      "left": {
+        "left": {
+          "word": "true"
+        },
+        "right": {
+          "left": {
+            "word": "and"
+          },
+          "right": {
+            "word": "true"
+          }
+        }
+      },
+      "right": {
+        "left": {
+          "word": "or"
+        },
+        "right": {
+          "left": {
+            "word": "false"
+          },
+          "right": {
+            "left": {
+              "word": "and"
+            },
+            "right": {
+              "word": "false"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

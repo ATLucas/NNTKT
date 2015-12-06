@@ -38,7 +38,7 @@ public class MnistTrainer {
 		int epoch = 0;
 		for (int i = 0; i < config.numEpochs * config.itersPerEpoch; i++) {
 			if(i > 0 && i % config.itersBetweenWritingModel == 0) {
-				Common.write("models/mnist/" + Logger.timeString + "." + i + ".dnn", network.toString());
+				Common.write("models/mnist/" + Logger.timeString + "." + i + ".dnn", network.toJsonObject());
 			}
 
 			if (i % config.itersPerEpoch == 0) {

@@ -1,5 +1,5 @@
 {
-  "size": 5,
+  "size": 4,
   "wordDim": 1,
   "words": [
     {
@@ -22,12 +22,6 @@
     },
     {
       "word": "not",
-      "updatable": true,
-      "vector": [],
-      "matrix": []
-    },
-    {
-      "word": "or",
       "updatable": true,
       "vector": [],
       "matrix": []

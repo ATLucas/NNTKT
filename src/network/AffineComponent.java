@@ -4,16 +4,14 @@ import containers.Matrix;
 import tools.Logger;
 import tools.TrainConfig;
 
-import java.util.Stack;
-
 /**
  * Created by Andrew on 11/13/2015.
  */
 public class AffineComponent implements NetworkComponent {
 	private Matrix weights;
 	private Matrix biases;
-	private Stack<Matrix> inputs;
-	private Stack<Matrix> errors;
+	private Matrix input;
+	private Matrix error;
 
 	private int inputDim, outputDim;
 
@@ -26,9 +24,6 @@ public class AffineComponent implements NetworkComponent {
 
 		weights.randomize();
 		biases.randomize();
-
-		inputs = new Stack<>();
-		errors = new Stack<>();
 	}
 
 	@Override
@@ -43,24 +38,22 @@ public class AffineComponent implements NetworkComponent {
 
 	@Override
 	public Matrix forward(Matrix input) {
-		input.makeImmutable();
-		inputs.push(input);
+		this.input = input;
+		this.input.makeImmutable();
 		return input.multiply(weights).applyBias(biases);
 	}
 
 	@Override
 	public Matrix backward(Matrix error) {
-		error.makeImmutable();
-		errors.push(error);
+		this.error = error;
+		this.error.makeImmutable();
 		return error.multiplyTranspose(weights);
 	}
 
 	@Override
 	public void update(TrainConfig config) {
-		if(inputs.size() == 0) Logger.die("Tried to update an AffineComponent that has not received input");
-		if(errors.size() == 0) Logger.die("Tried to update an AffineComponent that has not received error");
-		Matrix input = inputs.pop();
-		Matrix error = errors.pop();
+		if(input == null) Logger.die("Tried to update an AffineComponent that has not received input");
+		if(error == null) Logger.die("Tried to update an AffineComponent that has not received error");
 		biases.updateBias(error, config.learningRate / config.minibatchSize);
 		weights.updateWeights(input.transposeMultiply(error),
 				config.learningRate / config.minibatchSize,
@@ -69,15 +62,15 @@ public class AffineComponent implements NetworkComponent {
 
 	@Override
 	public void toString(StringBuilder builder) {
-		builder.append("{\n\t\"type\": Affine");
-		builder.append(",\n\t\"inputDim\": ");
+		builder.append("{\n  \"type\": Affine");
+		builder.append(",\n  \"inputDim\": ");
 		builder.append(inputDim);
-		builder.append(",\n\t\"outputDim\": ");
+		builder.append(",\n  \"outputDim\": ");
 		builder.append(outputDim);
-		builder.append(",\n\t\"weights\": [\n");
-		weights.toString(builder);
-		builder.append("\t],\n\t\"biases\": [\n");
-		biases.toString(builder);
-		builder.append("\t]\n}");
+		builder.append(",\n  \"weights\": [\n");
+		weights.appendSelf(builder, "    ");
+		builder.append("  ],\n  \"biases\": [\n");
+		biases.appendSelf(builder, "    ");
+		builder.append("  ]\n}");
 	}
 }

@@ -10,7 +10,6 @@ import tools.Logger;
 import tools.MvRnnTrainConfig;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  * Created by Andrew on 11/15/2015.
@@ -20,10 +19,7 @@ public class MvRnnTree {
 	private String labelType;
 	private Vocab vocab;
 
-	private ArrayList<Node> leaves;
-
 	public MvRnnTree(JSONObject jobj, Vocab vocab, String labelType) {
-		leaves = new ArrayList<>();
 		this.labelType = labelType;
 		this.vocab = vocab;
 		try {
@@ -60,21 +56,11 @@ public class MvRnnTree {
 	}
 
 	public float train(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights) {
-		return root.backprop(config, network, weights, root.forward(network, weights));
+		return root.backprop(config, network, weights, null); // feed-forward is done at every node in the tree
 	}
 
 	public MvPair decode(NeuralNetwork network, Matrix weights) {
 		return root.forward(network, weights);
-	}
-
-	private static MvPair Collapse(NeuralNetwork network, Matrix weights, MvPair left, MvPair right) {
-		Matrix firstVector = left.vector.multiply(right.matrix);
-		Matrix secondVector = right.vector.multiply(left.matrix);
-		Matrix weightsInput = Matrix.StackHorizontally(left.matrix, right.matrix);
-		MvPair mvPair = new MvPair(network.forward(Matrix.StackHorizontally(firstVector, secondVector)),
-							weightsInput.multiply(weights));
-		mvPair.input = weightsInput;
-		return mvPair;
 	}
 
 	private class Node {
@@ -82,24 +68,25 @@ public class MvRnnTree {
 		Word word;
 		Word targetWord;
 		Matrix targetVector;
-		MvPair mvPair;
-
-		Stack<Matrix> inputs;
-
-		Node(){
-			inputs = new Stack<>();
-		}
+		MvPair input, output;
 
 		MvPair forward(NeuralNetwork network, Matrix weights) {
 			if(left != null && right != null) {
 				MvPair l = left.forward(network, weights);
 				MvPair r = right.forward(network, weights);
-				mvPair = Collapse(network, weights, l, r);
-				inputs.push(mvPair.input);
-				return mvPair;
+
+				Matrix firstVector = l.vector.multiply(r.matrix);
+				Matrix secondVector = r.vector.multiply(l.matrix);
+
+				input = new MvPair(Matrix.StackHorizontally(firstVector, secondVector),
+						Matrix.StackHorizontally(l.matrix, r.matrix));
+				output = new MvPair(network.forward(input.vector),
+						input.matrix.multiply(weights));
+				return output;
 			} else {
 				if(word != null) {
-					return mvPair = word.mvPair;
+					output = word.mvPair;
+					return output;
 				} else {
 					Logger.die("Hit an invalid node");
 					return null;
@@ -107,44 +94,46 @@ public class MvRnnTree {
 			}
 		}
 
-		float backprop(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights, MvPair data) {
+		float backprop(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights, MvPair error) {
 			float cost = 0;
+			this.forward(network, weights);
 
 			/** If we have a label, calculate the error,
-			 * else we assume the input to this node is the backpropped error. **/
+			 * otherwise use the back-propped error **/
 			if(targetWord != null) {
-				cost = network.calcObjectiveFunction(config.networkConfig, data.vector, targetWord.mvPair.vector);
-				data.matrix.applyMeanSquaredError(targetWord.mvPair.matrix, 1);
+				error = new MvPair(output);
+				cost += network.calcObjectiveFunction(config.networkConfig, error.vector, targetWord.mvPair.vector);
+				cost += error.matrix.applyMeanSquaredError(targetWord.mvPair.matrix, 1);
 			} else if(targetVector != null) {
-				Logger.die("Target vectors not yet supported for tree");
+				Logger.die("Target vectors not yet supported for MvRnnTree");
 			}
 
 			if(word != null) { // if this node is a leaf
-				word.update(data.vector, data.matrix, config.vectorLearningRate, config.matrixLearningRate);
+				word.update(error.vector, error.matrix, config.vectorLearningRate, config.matrixLearningRate);
 			} else {
-				/** Backprop the the vector composition network error **/
-				data.vector = network.backward(data.vector);
+				/** Backprop the error **/
+				error.vector = network.backward(error.vector);
+				Matrix temp = error.matrix.multiplyTranspose(weights);
 
-				/** Update the vector composition network **/
+				/** Update the network and weights **/
+				if(input == null) Logger.die("Tried to backprop on a node that has not received input");
 				network.update(config.networkConfig);
-
-				/** Backprop the matrix composition weights error **/
-				if(inputs.size() == 0) Logger.die("Tried to backprop on a node that has not received input");
-				Matrix temp = data.matrix.multiplyTranspose(weights);
-
-				/** Update the matrix composition weights **/
-				weights.updateWeights(inputs.pop().transposeMultiply(data.matrix), config.weightsLearningRate, config.weightsDecayFactor);
-				data.matrix = temp;
+				weights.updateWeights(input.matrix.transposeMultiply(error.matrix),
+						config.weightsLearningRate,
+						config.weightsDecayFactor);
+				error.matrix = temp;
 
 				/** Now continue the backprop **/
 				if (left != null) {
 					if (right != null) {
-						Matrix leftError = data.vector.getLeftHalf().multiplyTranspose(right.mvPair.matrix);
-						Matrix rightError = data.vector.getRightHalf().multiplyTranspose(left.mvPair.matrix);
 						cost += right.backprop(config, network, weights,
-								new MvPair(rightError, data.matrix.getRightHalf()));
+										new MvPair(
+											error.vector.getRightHalf().multiplyTranspose(left.output.matrix),
+											error.matrix.getRightHalf()));
 						cost += left.backprop(config, network, weights,
-								new MvPair(leftError, data.matrix.getLeftHalf()));
+										new MvPair(
+											error.vector.getLeftHalf().multiplyTranspose(right.output.matrix),
+											error.matrix.getLeftHalf()));
 					} else {
 						Logger.die("Hit an invalid node");
 						return 0;

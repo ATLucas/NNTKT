@@ -82,4 +82,27 @@ public class Vocab {
 		return id2word.get(i);
 	}
 
+	public String toJsonObject(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{\n\"size\": ");
+		sb.append(id2word.size());
+		sb.append(",\n\"wordDim\": ");
+		sb.append(wordDim);
+		sb.append(",\n\"words\": [\n");
+		for(int id: id2word.keySet()) {
+			Word word = id2word(id);
+			sb.append("  {\n    \"word\": \"");
+			sb.append(id2string(id));
+			sb.append("\",\n    \"updatable\": ");
+			sb.append(word.isUpdatable());
+			sb.append(",\n    \"vector\": [\n");
+			word.mvPair.vector.appendSelf(sb, "      ");
+			sb.append("    ],\n    \"matrix\": [\n");
+			word.mvPair.matrix.appendSelf(sb, "      ");
+			sb.append("    ]\n  },\n");
+		}
+		sb.deleteCharAt(sb.length()-2);
+		sb.append("]\n}");
+		return sb.toString();
+	}
 }

@@ -7,10 +7,13 @@ public class MvPair {
 	public Matrix matrix;
 	public Matrix vector;
 
-	public Matrix input;
-
 	public MvPair(Matrix v, Matrix m) {
 		vector = v;
 		matrix = m;
+	}
+
+	public MvPair(MvPair other) {
+		vector = new Matrix(other.vector);
+		matrix = new Matrix(other.matrix);
 	}
 }

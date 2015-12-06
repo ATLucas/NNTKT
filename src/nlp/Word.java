@@ -30,11 +30,14 @@ public class Word {
 		return dim;
 	}
 
+	public boolean isUpdatable() {
+		return updatable;
+	}
+
 	public void update(Matrix v, Matrix m, float vectorLearningRate, float matrixLearningRate) {
 		if(updatable) {
 			mvPair.vector.update(v, vectorLearningRate);
 			mvPair.matrix.update(m, matrixLearningRate);
 		}
 	}
-
 }

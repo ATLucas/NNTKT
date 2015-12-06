@@ -10,12 +10,11 @@ import java.util.Stack;
  * Created by Andrew on 11/14/2015.
  */
 public class TanhComponent implements NetworkComponent {
-	private Stack<Matrix> inputs;
+	private Matrix input;
 
 	private int dim;
 
 	public TanhComponent(int d) {
-		inputs = new Stack<>();
 		dim = d;
 	}
 
@@ -31,13 +30,12 @@ public class TanhComponent implements NetworkComponent {
 
 	@Override
 	public Matrix forward(Matrix matrix) {
-		inputs.push(new Matrix(matrix));
+		this.input = new Matrix(matrix);
 		return matrix.applyTanh();
 	}
 
 	@Override
 	public Matrix backward(Matrix matrix) {
-		Matrix input = inputs.pop();
 		if(input == null) Logger.die("Tried to backprop on a TanhComponent that has not received input");
 		return matrix.applyTanhPrime(input);
 	}

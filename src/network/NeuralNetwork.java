@@ -117,7 +117,7 @@ public class NeuralNetwork {
 		for(NetworkComponent component: components) component.update(config);
 	}
 
-	public String toString() {
+	public String toJsonObject() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{\n\"NeuralNetwork\": [\n");
 		for(NetworkComponent component: components) {

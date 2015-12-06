@@ -59,7 +59,7 @@ public class Matrix {
 		if(rows.length != numRows * numCols) {
 			Logger.die("Tried to copy an array of dim "+rows.length+" into a "+numRows+"x"+numCols+" matrix");
 		}
-		System.arraycopy(rows, 0, values, 0, numCols);
+		System.arraycopy(rows, 0, values, 0, rows.length);
 		pointer = values.length;
 	}
 
@@ -392,9 +392,19 @@ public class Matrix {
 		return Arrays.toString(values);
 	}
 
-	public void toString(StringBuilder builder){
+	public String toJsonObject(String tab) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(tab);
+		sb.append("[\n");
+		appendSelf(sb, tab + "  ");
+		sb.append(tab);
+		sb.append("]\n");
+		return sb.toString();
+	}
+
+	public void appendSelf(StringBuilder builder, String tab){
 		for(int x=0; x<numRows; x++) {
-			builder.append("\t\t");
+			builder.append(tab);
 			for (int y = 0; y < numCols; y++) {
 				builder.append(values[x*stride + y]);
 				builder.append(",");
