@@ -10,11 +10,12 @@ import java.util.Stack;
  * Created by Andrew on 11/14/2015.
  */
 public class Relu2Component implements NetworkComponent {
-	private Matrix input;
+	private Stack<Matrix> inputs;
 	private int dim;
 
 	public Relu2Component(int d) {
 		dim = d;
+		inputs = new Stack<>();
 	}
 
 	@Override
@@ -29,15 +30,14 @@ public class Relu2Component implements NetworkComponent {
 
 	@Override
 	public Matrix forward(Matrix matrix) {
-		input = new Matrix(matrix);
-		input.makeImmutable();
+		inputs.push(new Matrix(matrix));
 		return matrix.applyRelu2();
 	}
 
 	@Override
 	public Matrix backward(Matrix matrix) {
-		if(input == null) Logger.die("Tried to backprop on a Relu2Component that has not received input");
-		return matrix.applyRelu2Prime(input);
+		if(inputs.size() == 0) Logger.die("Tried to backprop on a Relu2Component that has not received input");
+		return matrix.applyRelu2Prime(inputs.pop());
 	}
 
 	@Override

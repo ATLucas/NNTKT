@@ -56,7 +56,8 @@ public class MvRnnTree {
 	}
 
 	public float train(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights) {
-		return root.backprop(config, network, weights, null); // feed-forward is done at every node in the tree
+		MvPair output = root.forward(network, weights);
+		return root.backprop(config, network, weights, output);
 	}
 
 	public MvPair decode(NeuralNetwork network, Matrix weights) {
@@ -96,7 +97,6 @@ public class MvRnnTree {
 
 		float backprop(MvRnnTrainConfig config, NeuralNetwork network, Matrix weights, MvPair error) {
 			float cost = 0;
-			this.forward(network, weights);
 
 			/** If we have a label, calculate the error,
 			 * otherwise use the back-propped error **/
@@ -121,7 +121,6 @@ public class MvRnnTree {
 				weights.updateWeights(input.matrix.transposeMultiply(error.matrix),
 						config.weightsLearningRate,
 						config.weightsDecayFactor);
-				error.matrix = temp;
 
 				/** Now continue the backprop **/
 				if (left != null) {
@@ -129,11 +128,11 @@ public class MvRnnTree {
 						cost += right.backprop(config, network, weights,
 										new MvPair(
 											error.vector.getRightHalf().multiplyTranspose(left.output.matrix),
-											error.matrix.getRightHalf()));
+											temp.getRightHalf()));
 						cost += left.backprop(config, network, weights,
 										new MvPair(
 											error.vector.getLeftHalf().multiplyTranspose(right.output.matrix),
-											error.matrix.getLeftHalf()));
+											temp.getLeftHalf()));
 					} else {
 						Logger.die("Hit an invalid node");
 						return 0;

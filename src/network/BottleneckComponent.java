@@ -1,22 +1,21 @@
 package network;
 
 import containers.Matrix;
-import tools.Logger;
 import tools.TrainConfig;
 
 import java.util.Stack;
 
 /**
- * Created by Andrew on 11/14/2015.
+ * Created by Andrew on 12/6/2015.
  */
-public class ReluComponent implements NetworkComponent {
-	private Stack<Matrix> inputs;
-
+public class BottleneckComponent implements NetworkComponent {
 	private int dim;
 
-	public ReluComponent(int d) {
+	private Stack<Matrix> data;
+
+	public BottleneckComponent(int d) {
 		dim = d;
-		inputs = new Stack<>();
+		data = new Stack<>();
 	}
 
 	@Override
@@ -29,24 +28,29 @@ public class ReluComponent implements NetworkComponent {
 		return dim;
 	}
 
+	public Matrix getData() {
+		return data.pop();
+	}
+
 	@Override
 	public Matrix forward(Matrix matrix) {
-		inputs.push(new Matrix(matrix));
-		return matrix.applyRelu();
+		data.push(new Matrix(matrix));
+		return matrix;
 	}
 
 	@Override
 	public Matrix backward(Matrix matrix) {
-		if(inputs.size() == 0) Logger.die("Tried to backprop on a ReluComponent that has not received input");
-		return matrix.applyReluPrime(inputs.pop());
+		return matrix;
 	}
 
 	@Override
-	public void update(TrainConfig config) {}
+	public void update(TrainConfig config) {
+
+	}
 
 	@Override
 	public void toString(StringBuilder builder) {
-		builder.append("{\n\t\"type\": \"Relu\",");
+		builder.append("{\n\t\"type\": \"Bottleneck\",");
 		builder.append("\n\t\"dim\": ");
 		builder.append(dim);
 		builder.append("\n}");

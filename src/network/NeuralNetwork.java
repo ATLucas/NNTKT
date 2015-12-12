@@ -52,6 +52,11 @@ public class NeuralNetwork {
 								obj.getInt("dim")
 						));
 						break;
+					case "Bottleneck":
+						components.add(new BottleneckComponent(
+								obj.getInt("dim")
+						));
+						break;
 					default:
 						Logger.die("Unsupported component type: "+type);
 				}
@@ -127,6 +132,16 @@ public class NeuralNetwork {
 		builder.deleteCharAt(builder.length()-2);
 		builder.append("]\n}");
 		return builder.toString();
+	}
+
+	public Matrix getBottleneckData() {
+		for(NetworkComponent component: components) {
+			if(component.getClass() == BottleneckComponent.class) {
+				BottleneckComponent bn = (BottleneckComponent)component;
+				return bn.getData();
+			}
+		}
+		return null;
 	}
 
 }

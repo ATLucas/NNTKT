@@ -68,8 +68,8 @@ public class Matrix {
 		Random rand = new Random();
 		for(int x=0; x<numRows; x++) {
 			for (int y = 0; y < numCols; y++) {
-				float val = (float)(rand.nextGaussian() / Math.sqrt(numCols));
-				//val = val > 0 ? val: 0;
+				float val = (float)(rand.nextGaussian() * 0.1 / Math.sqrt(numCols));
+				val = val > 0 ? val : -val;
 				values[x*stride + y] = val;
 			}
 		}

@@ -36,7 +36,8 @@ public class Vocab {
 			float[] vec = new float[wordDim];
 			if(jarray.length() == 0) {
 				for(int j=0; j<vec.length; j++) {
-					vec[j] = (float)rand.nextGaussian();
+					vec[j] = (float)rand.nextGaussian() * 0.1f;
+					vec[j] = vec[j] > 0 ? vec[j] : -vec[j];
 				}
 			} else if(jarray.length() == wordDim) {
 				for(int j=0; j<vec.length; j++) {
@@ -50,7 +51,8 @@ public class Vocab {
 			float[] mat = new float[wordDim*wordDim];
 			if(jarray.length() == 0) {
 				for(int j=0; j<mat.length; j++) {
-					mat[j] = (float)(rand.nextGaussian()/Math.sqrt(wordDim));
+					mat[j] = (float)rand.nextGaussian() * 0.1f;
+					mat[j] = mat[j] > 0 ? mat[j] : -mat[j];
 				}
 			} else if(jarray.length() == wordDim*wordDim) {
 				for(int j=0; j<mat.length; j++) {
