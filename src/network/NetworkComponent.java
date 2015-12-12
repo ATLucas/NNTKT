@@ -10,8 +10,10 @@ public interface NetworkComponent {
 
 	int inputDim();
 	int outputDim();
-	Matrix forward(Matrix matrix);
-	Matrix backward(Matrix matrix);
-	void update(TrainConfig config);
+	boolean shouldSaveInput();
+	boolean shouldSaveError();
+	Matrix forward(Matrix input);
+	Matrix backward(Matrix error, Matrix input);
+	void update(TrainConfig config, Matrix input, Matrix error);
 	void toString(StringBuilder builder);
 }

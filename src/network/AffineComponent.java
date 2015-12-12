@@ -12,8 +12,6 @@ import java.util.Stack;
 public class AffineComponent implements NetworkComponent {
 	private Matrix weights;
 	private Matrix biases;
-	private Stack<Matrix> inputs;
-	private Stack<Matrix> errors;
 
 	private int inputDim, outputDim;
 
@@ -26,9 +24,6 @@ public class AffineComponent implements NetworkComponent {
 
 		weights.randomize();
 		biases.randomize();
-
-		inputs = new Stack<>();
-		errors = new Stack<>();
 	}
 
 	@Override
@@ -42,26 +37,29 @@ public class AffineComponent implements NetworkComponent {
 	}
 
 	@Override
+	public boolean shouldSaveInput() {
+		return true;
+	}
+
+	@Override
+	public boolean shouldSaveError() {
+		return true;
+	}
+
+	@Override
 	public Matrix forward(Matrix input) {
-		inputs.push(input);
-		input.makeImmutable();
 		return input.multiply(weights).applyBias(biases);
 	}
 
 	@Override
-	public Matrix backward(Matrix error) {
-		errors.push(error);
-		error.makeImmutable();
+	public Matrix backward(Matrix error, Matrix input) {
 		return error.multiplyTranspose(weights);
 	}
 
 	@Override
-	public void update(TrainConfig config) {
-		if(inputs.size() == 0) Logger.die("Tried to update an AffineComponent that has not received input");
-		if(errors.size() == 0) Logger.die("Tried to update an AffineComponent that has not received error");
-		Matrix error = errors.pop();
+	public void update(TrainConfig config, Matrix input, Matrix error) {
 		biases.updateBias(error, config.learningRate / config.minibatchSize);
-		weights.updateWeights(inputs.pop().transposeMultiply(error),
+		weights.updateWeights(input.transposeMultiply(error),
 				config.learningRate / config.minibatchSize,
 				config.decayFactor);
 	}

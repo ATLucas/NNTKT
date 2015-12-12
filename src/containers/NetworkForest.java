@@ -6,12 +6,12 @@ import java.util.Random;
 /**
  * Created by Andrew on 11/15/2015.
  */
-public class MvRnnForest {
+public class NetworkForest {
 
-	private ArrayList<MvRnnTree> trees;
+	private ArrayList<NetworkTree> trees;
 	private Random rand;
 
-	public MvRnnForest() {
+	public NetworkForest() {
 		trees = new ArrayList<>();
 		rand = new Random();
 	}
@@ -20,16 +20,16 @@ public class MvRnnForest {
 		return trees.size();
 	}
 
-	public MvRnnTree getTree(int i) {
+	public NetworkTree getTree(int i) {
 		if(i<size()) return trees.get(i);
 		else return null;
 	}
 
-	public void add(MvRnnTree tree) {
+	public void add(NetworkTree tree) {
 		trees.add(tree);
 	}
 
-	public MvRnnTree getTree() {
+	public NetworkTree getTree() {
 		return trees.get(rand.nextInt(trees.size()));
 	}
 }

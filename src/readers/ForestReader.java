@@ -1,7 +1,9 @@
 package readers;
 
-import containers.MvRnnForest;
-import containers.MvRnnTree;
+import containers.Matrix;
+import containers.NetworkForest;
+import containers.NetworkTree;
+import network.NetworkNode;
 import nlp.Vocab;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,15 +15,17 @@ import tools.Logger;
  */
 public class ForestReader {
 
-	public static void Read(MvRnnForest mvRnnForest, Vocab vocab, String treeFileName) {
+	public static void Read(NetworkForest networkForest, Vocab vocab, String treeFileName,
+							NetworkNode networkNode, Matrix weightsCombiner) {
 		try {
 			JSONObject jobject = new JSONObject(Common.readFileIntoString(treeFileName));
 			int numTrees = jobject.getInt("numTrees");
 			String labelType = jobject.getString("labelType");
 			JSONArray jarray = jobject.getJSONArray("trees");
-			if(numTrees != jarray.length()) Logger.die("Invalid number of trees in mvRnnForest file");
+			if(numTrees != jarray.length()) Logger.die("Invalid number of trees in networkForest file");
 			for(int i=0; i<numTrees; i++) {
-				mvRnnForest.add(new MvRnnTree(jarray.getJSONObject(i), vocab, labelType));
+				networkForest.add(new NetworkTree(jarray.getJSONObject(i), vocab, labelType,
+						networkNode, weightsCombiner));
 			}
 		} catch(Exception e){e.printStackTrace();}
 	}

@@ -3,7 +3,7 @@ package tools;
 import containers.Matrix;
 import containers.Example;
 import containers.Dataset;
-import network.NeuralNetwork;
+import network.NetworkNode;
 import org.json.JSONObject;
 import readers.MnistReader;
 
@@ -27,14 +27,14 @@ public class MnistTrainer {
 		} catch(Exception e) {e.printStackTrace();Logger.die("Unable to parse config file: "+args[0]);}
 		Logger.log(""+trainConfig);
 
-		NeuralNetwork network = new NeuralNetwork(trainConfig.getTopology());
+		NetworkNode network = new NetworkNode(trainConfig.getTopology());
 
 		Train(trainConfig, network, trainData, testData);
 
 		Logger.close();
 	}
 
-	public static void Train(TrainConfig config, NeuralNetwork network, Dataset trainData, Dataset testData) {
+	public static void Train(TrainConfig config, NetworkNode network, Dataset trainData, Dataset testData) {
 		int epoch = 0;
 		for (int i = 0; i < config.numEpochs * config.itersPerEpoch; i++) {
 			if(i > 0 && i % config.itersBetweenWritingModel == 0) {
@@ -65,7 +65,7 @@ public class MnistTrainer {
 		}
 	}
 
-	public static void Decode(NeuralNetwork network, Dataset dataset) {
+	public static void Decode(NetworkNode network, Dataset dataset) {
 		int numCorrect = 0;
 		for(int i=0; i<dataset.size(); i++) {
 			Example example = dataset.getExample(i);

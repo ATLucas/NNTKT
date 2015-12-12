@@ -12,11 +12,15 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 11/11/2015.
  */
-public class NeuralNetwork {
+public class NetworkNode {
 	private ArrayList<NetworkComponent> components;
+	private ArrayList<Matrix> inputs;
+	private ArrayList<Matrix> errors;
 
-	public NeuralNetwork(ArrayList<JSONObject> topology) {
+	public NetworkNode(ArrayList<JSONObject> topology) {
 		components = new ArrayList<>();
+		inputs = new ArrayList<>();
+		errors = new ArrayList<>();
 		try {
 			for (JSONObject obj : topology) {
 				String type = obj.getString("type");
@@ -52,16 +56,22 @@ public class NeuralNetwork {
 								obj.getInt("dim")
 						));
 						break;
-					case "Bottleneck":
-						components.add(new BottleneckComponent(
-								obj.getInt("dim")
-						));
-						break;
 					default:
 						Logger.die("Unsupported component type: "+type);
 				}
+				inputs.add(null);
+				errors.add(null);
 			}
 		} catch(Exception e) {e.printStackTrace();}
+	}
+
+	public NetworkNode(NetworkNode other) {
+		components = new ArrayList<>();
+		inputs = new ArrayList<>();
+		errors = new ArrayList<>();
+		components.addAll(other.components);
+		inputs.addAll(other.inputs);
+		errors.addAll(other.errors);
 	}
 
 	public int inputDim() {
@@ -88,9 +98,12 @@ public class NeuralNetwork {
 		return cost;
 	}
 
-	public Matrix forward(Matrix data) {
-		for(NetworkComponent component: components) data = component.forward(data);
-		return data;
+	public Matrix forward(Matrix input) {
+		for(int i=0; i<components.size(); i++) {
+			if(components.get(i).shouldSaveInput()) inputs.set(i, new Matrix(input));
+			input = components.get(i).forward(input);
+		}
+		return input;
 	}
 
 	public float calcObjectiveFunction(TrainConfig config, Matrix data, Minibatch minibatch) {
@@ -113,18 +126,26 @@ public class NeuralNetwork {
 		return -1;
 	}
 
-	public Matrix backward(Matrix data) {
-		for(int i=components.size()-1; i>=0; i--) data = components.get(i).backward(data);
-		return data;
+	public Matrix backward(Matrix error) {
+		for(int i=components.size()-1; i>=0; i--) {
+			if(components.get(i).shouldSaveError()) {
+				error.makeImmutable();
+				errors.set(i, error);
+			}
+			error = components.get(i).backward(error, inputs.get(i));
+		}
+		return error;
 	}
 
 	public void update(TrainConfig config) {
-		for(NetworkComponent component: components) component.update(config);
+		for(int i=0; i<components.size(); i++) {
+			components.get(i).update(config, inputs.get(i), errors.get(i));
+		}
 	}
 
 	public String toJsonObject() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{\n\"NeuralNetwork\": [\n");
+		builder.append("{\n\"NetworkNode\": [\n");
 		for(NetworkComponent component: components) {
 			component.toString(builder);
 			builder.append(",\n");
@@ -132,16 +153,6 @@ public class NeuralNetwork {
 		builder.deleteCharAt(builder.length()-2);
 		builder.append("]\n}");
 		return builder.toString();
-	}
-
-	public Matrix getBottleneckData() {
-		for(NetworkComponent component: components) {
-			if(component.getClass() == BottleneckComponent.class) {
-				BottleneckComponent bn = (BottleneckComponent)component;
-				return bn.getData();
-			}
-		}
-		return null;
 	}
 
 }

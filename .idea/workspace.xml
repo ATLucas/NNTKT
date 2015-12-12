@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84b7c069-1778-4612-b284-d977c2019e6e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/network/BottleneckComponent.java" />
+    <list default="true" id="84b7c069-1778-4612-b284-d977c2019e6e" name="Default" comment="Done with restructuring for MV-RNN.  Reproduces results for the logic toy example in Socher's &quot;Semantic Compositionality through Recursive Matrix-Vector Spaces&quot;.  Backprop should now match his exactly.  The zero percent error rate is dependent upon the nonlinearity, and thus shouldn't be anticipated for real applications.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/containers/NetworkTree.java" />
+      <change type="DELETED" beforePath="C:\Development\NNTKT\src\containers\MvRnnTree.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Development\NNTKT\src\network\BottleneckComponent.java" afterPath="" />
+      <change type="MOVED" beforePath="C:\Development\NNTKT\src\containers\MvRnnForest.java" afterPath="$PROJECT_DIR$/src/containers/NetworkForest.java" />
+      <change type="MOVED" beforePath="C:\Development\NNTKT\src\network\NeuralNetwork.java" afterPath="$PROJECT_DIR$/src/network/NetworkNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/AffineComponent.java" afterPath="$PROJECT_DIR$/src/network/AffineComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Matrix.java" afterPath="$PROJECT_DIR$/src/containers/Matrix.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/MvRnnTree.java" afterPath="$PROJECT_DIR$/src/containers/MvRnnTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/NeuralNetwork.java" afterPath="$PROJECT_DIR$/src/network/NeuralNetwork.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/readers/ForestReader.java" afterPath="$PROJECT_DIR$/src/readers/ForestReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java" afterPath="$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tools/MnistTrainer.java" afterPath="$PROJECT_DIR$/src/tools/MnistTrainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/NetworkComponent.java" afterPath="$PROJECT_DIR$/src/network/NetworkComponent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/Relu2Component.java" afterPath="$PROJECT_DIR$/src/network/Relu2Component.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/ReluComponent.java" afterPath="$PROJECT_DIR$/src/network/ReluComponent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/SigmoidComponent.java" afterPath="$PROJECT_DIR$/src/network/SigmoidComponent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/SoftmaxComponent.java" afterPath="$PROJECT_DIR$/src/network/SoftmaxComponent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network/TanhComponent.java" afterPath="$PROJECT_DIR$/src/network/TanhComponent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nlp/Vocab.java" afterPath="$PROJECT_DIR$/src/nlp/Vocab.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nlp/Word.java" afterPath="$PROJECT_DIR$/src/nlp/Word.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/train_mvrnn.config" afterPath="$PROJECT_DIR$/conf/train_mvrnn.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -40,52 +48,23 @@
       <file leaf-file-name="train_mvrnn.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf/train_mvrnn.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+            <state vertical-scroll-proportion="-4.2580647">
+              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MvRnnTree.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/containers/MvRnnTree.java">
+      <file leaf-file-name="NetworkTree.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/containers/NetworkTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="124" column="49" selection-start-line="124" selection-start-column="49" selection-end-line="124" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.8741722">
+              <caret line="102" column="30" selection-start-line="102" selection-start-column="30" selection-end-line="102" selection-end-column="30" />
               <folding>
-                <element signature="method#train#0;class#MvRnnTree#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SigmoidComponent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/network/SigmoidComponent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReluComponent.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/network/ReluComponent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6118192">
-              <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Word.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nlp/Word.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="56" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-              <folding>
-                <element signature="method#Word#0;class#Word#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#initNode#0;class#NetworkTree#0" expanded="true" />
+                <element signature="method#backward#0;class#TreeNode#0;class#NetworkTree#0" expanded="true" />
+                <element signature="method#update#0;class#TreeNode#0;class#NetworkTree#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,13 +90,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/network/NetworkComponent.java" />
-        <option value="$PROJECT_DIR$/src/network/SoftmaxComponent.java" />
-        <option value="$PROJECT_DIR$/src/containers/Example.java" />
-        <option value="$PROJECT_DIR$/src/containers/Minibatch.java" />
-        <option value="$PROJECT_DIR$/conf/logicalTrees.example" />
-        <option value="$PROJECT_DIR$/src/containers/ExampleTree.java" />
-        <option value="$PROJECT_DIR$/res/logicTrees/logicalTrees.example" />
         <option value="$PROJECT_DIR$/src/containers/Word.java" />
         <option value="$PROJECT_DIR$/res/nlp/logic.vocab" />
         <option value="$PROJECT_DIR$/res/nlp/logicTrees.example" />
@@ -130,10 +102,8 @@
         <option value="$PROJECT_DIR$/src/readers/VocabReader.java" />
         <option value="$PROJECT_DIR$/conf/trainLogicMvRnn.config" />
         <option value="$PROJECT_DIR$/conf/trainMatrix.config" />
-        <option value="$PROJECT_DIR$/src/readers/ForestReader.java" />
         <option value="$PROJECT_DIR$/src/readers/MnistReader.java" />
         <option value="$PROJECT_DIR$/src/containers/TreeExample.java" />
-        <option value="$PROJECT_DIR$/src/network/SigmoidComponent.java" />
         <option value="$PROJECT_DIR$/res/logic/and.forest" />
         <option value="$PROJECT_DIR$/res/logic/logic.forest" />
         <option value="$PROJECT_DIR$/res/logic/andnot.forest" />
@@ -149,19 +119,28 @@
         <option value="$PROJECT_DIR$/src/containers/MvPair.java" />
         <option value="$PROJECT_DIR$/res/logic/logic2.vocab" />
         <option value="$PROJECT_DIR$/res/logic/logic2.forest" />
-        <option value="$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java" />
         <option value="$PROJECT_DIR$/res/logic/logic.vocab" />
-        <option value="$PROJECT_DIR$/src/network/Relu2Component.java" />
-        <option value="$PROJECT_DIR$/src/nlp/Vocab.java" />
         <option value="$PROJECT_DIR$/src/containers/Matrix.java" />
-        <option value="$PROJECT_DIR$/src/network/AffineComponent.java" />
-        <option value="$PROJECT_DIR$/src/network/TanhComponent.java" />
-        <option value="$PROJECT_DIR$/src/network/ReluComponent.java" />
-        <option value="$PROJECT_DIR$/conf/train_mvrnn.config" />
         <option value="$PROJECT_DIR$/src/network/BottleneckComponent.java" />
         <option value="$PROJECT_DIR$/src/network/NeuralNetwork.java" />
-        <option value="$PROJECT_DIR$/src/containers/MvRnnTree.java" />
+        <option value="$PROJECT_DIR$/src/network/NetworkComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/AffineComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/Relu2Component.java" />
+        <option value="$PROJECT_DIR$/src/network/ReluComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/SigmoidComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/TanhComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/SoftmaxComponent.java" />
+        <option value="$PROJECT_DIR$/src/network/NetworkNode.java" />
+        <option value="$PROJECT_DIR$/src/nlp/Vocab.java" />
         <option value="$PROJECT_DIR$/src/nlp/Word.java" />
+        <option value="$PROJECT_DIR$/src/containers/MvRnnTree.java" />
+        <option value="$PROJECT_DIR$/src/network/WordNode.java" />
+        <option value="$PROJECT_DIR$/src/network/NetworkTree.java" />
+        <option value="$PROJECT_DIR$/src/containers/NetworkForest.java" />
+        <option value="$PROJECT_DIR$/src/readers/ForestReader.java" />
+        <option value="$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java" />
+        <option value="$PROJECT_DIR$/conf/train_mvrnn.config" />
+        <option value="$PROJECT_DIR$/src/containers/NetworkTree.java" />
       </list>
     </option>
   </component>
@@ -238,8 +217,22 @@
               <option name="myItemId" value="vocab" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
+              <option name="myItemId" value="NNTKT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NNTKT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -256,6 +249,10 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="readers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -268,10 +265,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nlp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -335,24 +328,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -367,43 +342,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="log" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NNTKT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -448,8 +387,8 @@
       <recent name="C:\Development\NNTKT\conf" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="nlp" />
       <recent name="containers" />
+      <recent name="nlp" />
     </key>
   </component>
   <component name="RunManager" selected="Application.LogicMvRnnTrainer">
@@ -665,37 +604,43 @@
       <option name="project" value="LOCAL" />
       <updated>1449429905080</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Backprop for MV-RNN is closer to the method described in the Socher's Semantic Compositionality through Recursive Matrix-Vector Spaces.  However, updates still take place earlier than they should.  Future structural changes should fix this.  Randomly initialized values are now smaller and positive, to replicate Socher's toy problem, composition of logical functions.  Results were replicated successfully.&#10;">
+      <created>1449943958867</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1449943958867</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2890625" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955357" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2890625" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39955357" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -715,22 +660,15 @@
     <MESSAGE value="Added MV-RNN functionality.  Compositionality of logical operators seems to work as expected, tested using word dimensions of one and two. Less than one percent difference between network outputs and training targets for that task.  MvRnnTree contains the compositionality methods." />
     <MESSAGE value="Consolidated MV-RNN training parameters into a single configuration file and object." />
     <MESSAGE value="In most recent implementation, backprop is done on the tree recursively. At each each node, forward prop is done on that node prior to calxulating error and updating weights.  Thus for a full update of the tree, the forward algorithm is run many times.  This is not how backprop is described in the MV-RNN paper, and will be changed in a future update." />
-    <option name="LAST_COMMIT_MESSAGE" value="In most recent implementation, backprop is done on the tree recursively. At each each node, forward prop is done on that node prior to calxulating error and updating weights.  Thus for a full update of the tree, the forward algorithm is run many times.  This is not how backprop is described in the MV-RNN paper, and will be changed in a future update." />
+    <MESSAGE value="Backprop for MV-RNN is closer to the method described in the Socher's Semantic Compositionality through Recursive Matrix-Vector Spaces.  However, updates still take place earlier than they should.  Future structural changes should fix this.  Randomly initialized values are now smaller and positive, to replicate Socher's toy problem, composition of logical functions.  Results were replicated successfully.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backprop for MV-RNN is closer to the method described in the Socher's Semantic Compositionality through Recursive Matrix-Vector Spaces.  However, updates still take place earlier than they should.  Future structural changes should fix this.  Randomly initialized values are now smaller and positive, to replicate Socher's toy problem, composition of logical functions.  Results were replicated successfully.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/containers/Matrix.java</url>
-          <line>350</line>
-          <properties />
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="56" />
+      <option name="time" value="60" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -744,16 +682,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/MvRnnTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="method#train#0;class#MvRnnTree#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -844,13 +772,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tools/MvRnnTrainConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23509933">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/MvPair.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6192053">
@@ -862,16 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.90625">
           <caret line="237" column="0" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -903,10 +814,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/MvRnnForest.java">
+    <entry file="file://$PROJECT_DIR$/src/network/SoftmaxComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23509933">
-          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.50984937">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/TanhComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.72074157">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/SigmoidComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71958286">
+          <caret line="49" column="71" selection-start-line="49" selection-start-column="71" selection-end-line="49" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/NetworkComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25492468">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Minibatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -914,131 +857,126 @@
     <entry file="file://$PROJECT_DIR$/src/nlp/Vocab.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="59" selection-start-line="54" selection-start-column="59" selection-end-line="54" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/Matrix.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="43" selection-start-line="71" selection-start-column="43" selection-end-line="71" selection-end-column="43" />
+          <caret line="104" column="9" selection-start-line="104" selection-start-column="9" selection-end-line="104" selection-end-column="9" />
           <folding>
-            <element signature="method#applyRelu2Prime#0;class#Matrix#0" expanded="true" />
-            <element signature="e#15262#15263#0" expanded="true" />
-            <element signature="e#15304#15305#0" expanded="true" />
+            <element signature="method#Vocab#0;class#Vocab#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/Relu2Component.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21854305">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="method#Relu2Component#0;class#Relu2Component#0" expanded="true" />
-            <element signature="method#forward#0;class#Relu2Component#0" expanded="true" />
-            <element signature="method#backward#0;class#Relu2Component#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/AffineComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0562913">
-          <caret line="70" column="49" selection-start-line="70" selection-start-column="49" selection-end-line="70" selection-end-column="49" />
-          <folding>
-            <element signature="method#AffineComponent#0;class#AffineComponent#0" expanded="true" />
-            <element signature="method#forward#0;class#AffineComponent#0" expanded="true" />
-            <element signature="method#backward#0;class#AffineComponent#0" expanded="true" />
-            <element signature="method#update#0;class#AffineComponent#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/TanhComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="51" selection-end-column="30" />
-          <folding>
-            <element signature="method#TanhComponent#0;class#TanhComponent#0" expanded="true" />
-            <element signature="method#forward#0;class#TanhComponent#0" expanded="true" />
-            <element signature="method#backward#0;class#TanhComponent#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/SoftmaxComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/NeuralNetwork.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="30" selection-start-line="58" selection-start-column="30" selection-end-line="58" selection-end-column="30" />
-          <folding>
-            <element signature="e#1487#1488#0" expanded="true" />
-            <element signature="e#1529#1530#0" expanded="true" />
-            <element signature="method#trainMinibatch#0;class#NeuralNetwork#0" expanded="true" />
-            <element signature="e#2940#2941#0" expanded="true" />
-            <element signature="e#3015#3016#0" expanded="true" />
-            <element signature="method#toJsonObject#0;class#NeuralNetwork#0" expanded="true" />
-            <element signature="method#getBottleneckData#0;class#NeuralNetwork#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/BottleneckComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.05629139">
-          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/train_mvrnn.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nlp/Word.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="56" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
+          <caret line="24" column="94" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="94" />
           <folding>
             <element signature="method#Word#0;class#Word#0" expanded="true" />
+            <element signature="method#update#0;class#Word#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/MvRnnTree.java">
+    <entry file="file://$PROJECT_DIR$/src/tools/MvRnnTrainConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="124" column="49" selection-start-line="124" selection-start-column="49" selection-end-line="124" selection-end-column="49" />
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/readers/ForestReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.116197184">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
           <folding>
-            <element signature="method#train#0;class#MvRnnTree#0" expanded="true" />
+            <element signature="method#Read#0;class#ForestReader#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/network/SigmoidComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/tools/LogicMvRnnTrainer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+          <folding>
+            <element signature="method#Train#0;class#LogicMvRnnTrainer#0" expanded="true" />
+            <element signature="method#Decode#0;class#LogicMvRnnTrainer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/AffineComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.052980132">
+          <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/Relu2Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/network/ReluComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6118192">
-          <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.008278145">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/network/NetworkNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.2334437">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding>
+            <element signature="method#forward#0;class#NetworkNode#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Matrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3129139">
+          <caret line="214" column="17" selection-start-line="214" selection-start-column="17" selection-end-line="214" selection-end-column="17" />
+          <folding>
+            <element signature="method#randomize#0;class#Matrix#0" expanded="true" />
+            <element signature="method#applyMeanSquaredError#0;class#Matrix#0" expanded="true" />
+            <element signature="method#applyRelu2Prime#0;class#Matrix#0" expanded="true" />
+            <element signature="method#updateBias#0;class#Matrix#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/NetworkForest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7086093">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/train_mvrnn.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2580647">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/NetworkTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8741722">
+          <caret line="102" column="30" selection-start-line="102" selection-start-column="30" selection-end-line="102" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#initNode#0;class#NetworkTree#0" expanded="true" />
+            <element signature="method#backward#0;class#TreeNode#0;class#NetworkTree#0" expanded="true" />
+            <element signature="method#update#0;class#TreeNode#0;class#NetworkTree#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

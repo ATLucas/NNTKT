@@ -96,7 +96,7 @@ public class Vocab {
 			sb.append("  {\n    \"word\": \"");
 			sb.append(id2string(id));
 			sb.append("\",\n    \"updatable\": ");
-			sb.append(word.isUpdatable());
+			sb.append(word.shouldUpdate);
 			sb.append(",\n    \"vector\": [\n");
 			word.mvPair.vector.appendSelf(sb, "      ");
 			sb.append("    ],\n    \"matrix\": [\n");

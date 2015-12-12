@@ -1,9 +1,9 @@
 package tools;
 
-import containers.MvRnnForest;
+import containers.NetworkForest;
 import containers.Matrix;
-import containers.MvRnnTree;
-import network.NeuralNetwork;
+import containers.NetworkTree;
+import network.NetworkNode;
 import nlp.Vocab;
 import org.json.JSONObject;
 import readers.ForestReader;
@@ -29,21 +29,21 @@ public class LogicMvRnnTrainer {
 		} catch(Exception e){e.printStackTrace();Logger.die("Unable to read vocab: " + args[1]);}
 		Logger.log("Vocab:\n" + vocab.toJsonObject());
 
-		MvRnnForest trainForest = new MvRnnForest();
-		ForestReader.Read(trainForest, vocab, args[2]);
-
-		NeuralNetwork network = new NeuralNetwork(config.networkConfig.getTopology());
+		NetworkNode network = new NetworkNode(config.networkConfig.getTopology());
 		Matrix weights = new Matrix(vocab.wordDim()*2,vocab.wordDim());
 		weights.randomize();
+
+		NetworkForest trainForest = new NetworkForest();
+		ForestReader.Read(trainForest, vocab, args[2], network, weights);
 		Train(config, trainForest, network, weights);
 
-		MvRnnForest testForest = new MvRnnForest();
-		ForestReader.Read(testForest, vocab, args[3]);
+		NetworkForest testForest = new NetworkForest();
+		ForestReader.Read(testForest, vocab, args[3], network, weights);
 		Logger.log("\nDECODING AT " + Logger.time() + "...");
 		Logger.log("\n TRAIN SET...");
-		Decode(trainForest, network, weights);
+		Decode(trainForest);
 		Logger.log("\n TEST SET...");
-		Decode(testForest, network, weights);
+		Decode(testForest);
 
 		Common.write("vocab/logic/" + Logger.timeString + "." + "final.vocab", vocab.toJsonObject());
 		Common.write("models/logic/" + Logger.timeString + "." + "final.v.nn", network.toJsonObject());
@@ -54,7 +54,7 @@ public class LogicMvRnnTrainer {
 		Logger.close();
 	}
 
-	public static void Train(MvRnnTrainConfig config, MvRnnForest mvRnnForest, NeuralNetwork network, Matrix weights) {
+	public static void Train(MvRnnTrainConfig config, NetworkForest networkForest, NetworkNode network, Matrix weights) {
 
 
 		int epoch = 0;
@@ -71,21 +71,21 @@ public class LogicMvRnnTrainer {
 
 			float cost = 0;
 			for (int m = 0; m < config.networkConfig.batchesPerIter; m++) {
-				MvRnnTree mvRnnTree = mvRnnForest.getTree();
-				cost += mvRnnTree.train(config, network, weights);
+				NetworkTree networkTree = networkForest.getTree();
+				cost += networkTree.train(config);
 			}
 			Logger.log("Average cost per example: " + (cost / config.networkConfig.batchesPerIter) + "\n");
 			Logger.flush();
 		}
 	}
 
-	public static void Decode(MvRnnForest mvRnnForest, NeuralNetwork network, Matrix weights) {
-		for (int j = 0; j < mvRnnForest.size(); j++) {
-			MvRnnTree mvRnnTree = mvRnnForest.getTree(j);
-			Logger.log("\ntarget vector: " + mvRnnTree.getTopLabel().vector.toString());
-			Logger.log("actual vector: " + mvRnnTree.decode(network, weights).vector.toString());
-			Logger.log("target matrix: " + mvRnnTree.getTopLabel().matrix.toString());
-			Logger.log("actual matrix: " + mvRnnTree.decode(network, weights).matrix.toString());
+	public static void Decode(NetworkForest networkForest) {
+		for (int j = 0; j < networkForest.size(); j++) {
+			NetworkTree networkTree = networkForest.getTree(j);
+			Logger.log("\ntarget vector: " + networkTree.getTopLabel().vector.toString());
+			Logger.log("actual vector: " + networkTree.decode().vector.toString());
+			Logger.log("target matrix: " + networkTree.getTopLabel().matrix.toString());
+			Logger.log("actual matrix: " + networkTree.decode().matrix.toString());
 		}
 	}
 }

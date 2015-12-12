@@ -24,17 +24,27 @@ public class SoftmaxComponent implements NetworkComponent {
 	}
 
 	@Override
-	public Matrix forward(Matrix matrix) {
-		return matrix.applySoftmax();
+	public boolean shouldSaveInput() {
+		return false;
 	}
 
 	@Override
-	public Matrix backward(Matrix matrix) {
-		return matrix;
+	public boolean shouldSaveError() {
+		return false;
 	}
 
 	@Override
-	public void update(TrainConfig config) {
+	public Matrix forward(Matrix input) {
+		return input.applySoftmax();
+	}
+
+	@Override
+	public Matrix backward(Matrix error, Matrix input) {
+		return error;
+	}
+
+	@Override
+	public void update(TrainConfig config, Matrix input, Matrix error) {
 
 	}
 

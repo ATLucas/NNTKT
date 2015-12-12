@@ -10,13 +10,10 @@ import java.util.Stack;
  * Created by Andrew on 11/14/2015.
  */
 public class TanhComponent implements NetworkComponent {
-	private Stack<Matrix> inputs;
-
 	private int dim;
 
 	public TanhComponent(int d) {
 		dim = d;
-		inputs = new Stack<>();
 	}
 
 	@Override
@@ -30,19 +27,29 @@ public class TanhComponent implements NetworkComponent {
 	}
 
 	@Override
-	public Matrix forward(Matrix matrix) {
-		inputs.push(new Matrix(matrix));
-		return matrix.applyTanh();
+	public boolean shouldSaveInput() {
+		return true;
 	}
 
 	@Override
-	public Matrix backward(Matrix matrix) {
-		if(inputs.size() == 0) Logger.die("Tried to backprop on a TanhComponent that has not received input");
-		return matrix.applyTanhPrime(inputs.pop());
+	public boolean shouldSaveError() {
+		return false;
 	}
 
 	@Override
-	public void update(TrainConfig config) {}
+	public Matrix forward(Matrix input) {
+		return input.applyTanh();
+	}
+
+	@Override
+	public Matrix backward(Matrix error, Matrix input) {
+		return error.applyTanhPrime(input);
+	}
+
+	@Override
+	public void update(TrainConfig config, Matrix input, Matrix error) {
+
+	}
 
 	@Override
 	public void toString(StringBuilder builder) {

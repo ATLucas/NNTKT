@@ -10,11 +10,9 @@ import java.util.Stack;
  * Created by Andrew on 11/13/2015.
  */
 public class SigmoidComponent implements NetworkComponent {
-	private Stack<Matrix> inputs;
 	private int dim;
 
 	public SigmoidComponent(int d) {
-		inputs = new Stack<>();
 		dim = d;
 	}
 
@@ -29,20 +27,29 @@ public class SigmoidComponent implements NetworkComponent {
 	}
 
 	@Override
-	public Matrix forward(Matrix matrix) {
-		inputs.push(new Matrix(matrix));
-		return matrix.applySigmoid();
+	public boolean shouldSaveInput() {
+		return true;
 	}
 
 	@Override
-	public Matrix backward(Matrix matrix) {
-		Matrix input = inputs.pop();
-		if(input == null) Logger.die("Tried to backprop on a SigmoidComponent that has not received input");
-		return matrix.applySigmoidPrime(input);
+	public boolean shouldSaveError() {
+		return false;
 	}
 
 	@Override
-	public void update(TrainConfig config) {}
+	public Matrix forward(Matrix input) {
+		return input.applySigmoid();
+	}
+
+	@Override
+	public Matrix backward(Matrix error, Matrix input) {
+		return error.applySigmoidPrime(input);
+	}
+
+	@Override
+	public void update(TrainConfig config, Matrix input, Matrix error) {
+
+	}
 
 	@Override
 	public void toString(StringBuilder builder) {
