@@ -29,9 +29,17 @@ public class Logger {
 		return sdf.format(Calendar.getInstance().getTime());
 	}
 
+	public static void log(String message, boolean addNewline) {
+		if(LOG != null) LOG.print(message);
+		System.out.print(message);
+		if(addNewline) {
+			if(LOG != null) LOG.println();
+			System.out.println();
+		}
+	}
+
 	public static void log(String message) {
-		if(LOG != null) LOG.println(message);
-		System.out.println(message);
+		log(message, true);
 	}
 
 	public static void warn(String message) {

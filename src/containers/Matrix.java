@@ -36,6 +36,12 @@ public class Matrix {
 		isMutable = false;
 	}
 
+	public float[] getValues() {
+		float[] res = new float[values.length];
+		System.arraycopy(values, 0, res, 0, values.length);
+		return res;
+	}
+
 	public void copyRow(Matrix row) {
 		if(!isMutable) Logger.die("Tried to change an immutable matrix of dimensions"+numRows+"x"+numCols);
 		copyRow(row.values, pointer);
@@ -101,7 +107,7 @@ public class Matrix {
 		for(int x=0; x<this.numRows; x++) {
 			for (int y = 0; y < this.numCols; y++) {
 				for(int z = 0; z < other.numRows; z++) {
-					result.values[x*other.stride + z] +=
+					result.values[x*other.numRows + z] +=
 							this.values[x*this.stride + y] * other.values[z*other.stride + y];
 				}
 			}
